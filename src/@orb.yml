@@ -18,7 +18,7 @@ examples:
                         - trigger-circleci-job-orb/trigger:
                               token: ${CIRCLECI_API_TOKEN}
                               organization: foo
-                              repository: bar
+                              project: bar
                               branch: master
 commands:
     build-branch:
@@ -46,7 +46,7 @@ commands:
                   command: |
                       curl -X POST \
                       -d '{"branch":"<< parameters.branch >>"}' \
-                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.project >>/build?circle-token=<< parameters.token >>
     build-tag:
         parameters:
             token:
@@ -71,7 +71,7 @@ commands:
                   command: |
                       curl -X POST \
                       -d '{"tag":"<< parameters.tag >>"}' \
-                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.project >>/build?circle-token=<< parameters.token >>
     build-revision:
         parameters:
             token:
@@ -97,4 +97,4 @@ commands:
                   command: |
                       curl -X POST \
                       -d '{"revision":"<< parameters.revision >>"}' \
-                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.project >>/build?circle-token=<< parameters.token >>
