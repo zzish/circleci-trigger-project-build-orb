@@ -19,3 +19,6 @@ workflows:
                     project: bar
                     branch: master
 ```
+
+To get a circleci api token go to:
+https://circleci.com/docs/2.0/managing-api-tokens/#creating-a-personal-api-token
