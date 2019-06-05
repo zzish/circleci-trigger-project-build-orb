@@ -11,11 +11,11 @@ examples:
         usage:
             version: 2.1
             orbs:
-                trigger-circleci-job-orb: zzish/circleci-trigger-project-build-orb@1.0.0
+                circleci-trigger-project-build-orb: zzish/circleci-trigger-project-build-orb@1.0.0
             workflows:
                 foo:
                     jobs:
-                        - trigger-circleci-job-orb/trigger:
+                        - circleci-trigger-project-build-orb/build-branch:
                               token: ${CIRCLECI_API_TOKEN}
                               organization: foo
                               project: bar
