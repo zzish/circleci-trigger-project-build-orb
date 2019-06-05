@@ -1,0 +1,100 @@
+version: 2.1
+description: |
+    A simple circleci project build trigger orb
+executors:
+    default:
+        docker:
+            - image: bash:4.4.19
+examples:
+    trigger:
+        description: invoke and run the circleci trigger project orb
+        usage:
+            version: 2.1
+            orbs:
+                trigger-circleci-job-orb: zzish/circleci-trigger-project-build-orb@1.0.0
+            workflows:
+                foo:
+                    jobs:
+                        - trigger-circleci-job-orb/trigger:
+                              token: ${CIRCLECI_API_TOKEN}
+                              organization: foo
+                              repository: bar
+                              branch: master
+commands:
+    build-branch:
+        parameters:
+            token:
+                type: string
+                description: token that can be used to access the CircleCI API
+            vcs-type:
+                type: string
+                description: chosen VCS (either github or bitbucket)
+                default: github
+            organization:
+                type: string
+                description: name of your CircleCI organization
+            project:
+                type: string
+                description: name of your project
+            branch:
+                type: string
+                description: name of your branch
+                default: master
+        steps:
+            - run:
+                  name: Trigger a project build
+                  command: |
+                      curl -X POST \
+                      -d '{"branch":"<< parameters.branch >>"}' \
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
+    build-tag:
+        parameters:
+            token:
+                type: string
+                description: token that can be used to access the CircleCI API
+            vcs-type:
+                type: string
+                description: chosen VCS (either github or bitbucket)
+                default: github
+            organization:
+                type: string
+                description: name of your CircleCI organization
+            project:
+                type: string
+                description: name of your project
+            tag:
+                type: string
+                description: name of your tag
+        steps:
+            - run:
+                  name: Trigger a project build
+                  command: |
+                      curl -X POST \
+                      -d '{"tag":"<< parameters.tag >>"}' \
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
+    build-revision:
+        parameters:
+            token:
+                type: string
+                description: token that can be used to access the CircleCI API
+            vcs-type:
+                type: string
+                description: chosen VCS (either github or bitbucket)
+                default: github
+            organization:
+                type: string
+                description: name of your CircleCI organization
+            project:
+                type: string
+                description: name of your project
+            revision:
+                type: string
+                description: the specific revision to build
+                default: HEAD
+        steps:
+            - run:
+                  name: Trigger a project build
+                  command: |
+                      curl -X POST \
+                      -d '{"revision":"<< parameters.revision >>"}' \
+                      https://circleci.com/api/v1.1/project/<< parameters.vcs-type >>/<< parameters.organization >>/<< parameters.repository >>/build?circle-token=<< parameters.token >>
