@@ -9,15 +9,14 @@ To use this orb, try:
 ```
 version: 2.1
 orbs:
-    circleci-trigger-project-build-orb: zzish/circleci-trigger-project-build-orb@1.0.0
+    circleci-trigger-project-build-orb: zzish/circleci-trigger-project-build-orb@2.0.0
 workflows:
     foo:
         jobs:
-            - circleci-trigger-project-build-orb/build-branch:
+            - circleci-trigger-project-build-orb/trigger:
                     token: ${CIRCLECI_API_TOKEN}
                     organization: foo
                     project: bar
-                    branch: master
 ```
 
 To get a circleci api token go to:
